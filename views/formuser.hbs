@@ -1,0 +1,101 @@
+<h1>Usuario </h1> 
+
+<form id="usuarioForm" action="/usuarios/" method="POST">
+    <label for="idActualizar">ID del usuario: {{usuarios._id}}</label>
+    <input type="hidden" id="idActualizar" value="{{usuarios._id}}" name="id" readonly>
+    <br>
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" value="{{usuarios.nombre}}" required>
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{usuarios.email}}" required>
+    <br>
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" value="{{usuarios.edad}}" required>
+    <br>
+
+    <input type="hidden" id="fechaCreacion" name="fechaCreacion" value="{{usuarios.fecha_creacion}}" readonly>
+    <br>
+
+    <h1>Dirección</h1>
+    <label for="calle">Calle:</label>
+    <input type="text" id="calle" name="direccion[calle]" value="{{usuarios.direcciones.[0].calle}}" required>
+    <br>
+
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" id="ciudad" name="direccion[ciudad]" value="{{usuarios.direcciones.[0].ciudad}}" required>
+    <br>
+
+    <label for="pais">País:</label>
+    <input type="text" id="pais" name="direccion[pais]" value="{{usuarios.direcciones.[0].pais}}" required>
+    <br>
+
+    <label for="codigoPostal">Código Postal:</label>
+    <input type="text" id="codigoPostal" name="direccion[codigo_postal]" value="{{usuarios.direcciones.[0].codigo_postal}}" required>
+    <br>
+
+    <!-- Botones -->
+    <button type="button" id="btnActualizar" data-action="update">Actualizar</button>
+    <button type="button" id="btnEliminar" data-action="delete">Eliminar</button>
+    <a href="/" class="btn btn-danger">Retornar</a>
+</form>
+
+<script>
+document.getElementById('btnActualizar').addEventListener('click', async function () {
+    const userId = document.getElementById('idActualizar').value;
+    const datosActualizados = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        edad: document.getElementById('edad').value,
+        direccion: {
+            calle: document.getElementById('calle').value,
+            ciudad: document.getElementById('ciudad').value,
+            pais: document.getElementById('pais').value,
+            codigo_postal: document.getElementById('codigoPostal').value
+        }
+    };
+
+    try {
+        const response = await fetch(`/usuarios/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosActualizados)
+        });
+
+        if (response.ok) {
+            alert('Usuario actualizado correctamente.');
+        } else {
+            const result = await response.json();
+            alert('Error al actualizar: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Ocurrió un error al actualizar el usuario.');
+    }
+});
+
+document.getElementById('btnEliminar').addEventListener('click', async function () {
+    const userId = document.getElementById('idActualizar').value;
+
+    try {
+        const response = await fetch(`/usuarios/${userId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Usuario eliminado correctamente.');
+        } else {
+            const result = await response.json();
+            alert('Error al eliminar: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Ocurrió un error al eliminar el usuario.');
+    }
+});
+</script>

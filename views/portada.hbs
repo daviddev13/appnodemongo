@@ -1,0 +1,67 @@
+<h1>App Node Express + MongoDB</h1>
+   <br></br>
+      <h4>Crear usuario en la base de datos.</h4> 
+           <form action="/usuarios" method="POST">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" ><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" ><br>
+
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" ><br>
+
+                <input type="hidden" id="fechaCreacion" name="fechaCreacion">
+
+                <h4>Dirección</h4>
+
+                <label for="calle">Calle:</label>
+                <input type="text" id="calle" name="direccion[calle]" >
+
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="direccion[ciudad]" ><br>
+
+                <label for="pais">País:</label>
+                <input type="text" id="pais" name="direccion[pais]" >
+
+                <label for="codigoPostal">Código Postal:</label>
+                <input type="text" id="codigo_postal" name="direccion[codigo_postal]">
+                <br></br>
+                <button type="submit">Subir usuario</button>                  
+           </form>                      
+    <br></br>
+    <h4>Mirar lista de usuarios</h4> 
+         <a href="/usuarios" class="btn btn-danger">Ver lista</a> 
+    <br></br>
+    <h4>Buscar usuario por su ID</h4> 
+        <form id="buscarUsuarioForm" method="GET">
+            <label for="id">ID del usuario:</label>
+            <input type="text" id="id" name="id" required>
+            <button type="submit">Buscar</button>
+        </form>
+       <script>
+            document.getElementById('buscarUsuarioForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const userId = document.getElementById('id').value;
+            if (userId) {
+                    window.location.href = `/usuarios/${userId}`; 
+                }
+                });
+        </script>                   
+    <br></br>
+    <h4>Clasificar usuarios por ciudad.</h4> 
+            <form id="clasificarUsuariosForm" method="GET">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required>
+                <button type="submit">Clasificar</button>
+           </form>
+            <script>
+                document.querySelector('#clasificarUsuariosForm').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Evita el envío tradicional del formulario
+                    const userCiudad = document.querySelector('[name="ciudad"]').value; // Toma la ciudad ingresada
+                    if (userCiudad) {
+                        window.location.href = `/usuarios/buscar/${encodeURIComponent(userCiudad)}`; // Redirige a la ruta específica
+                    }
+                });
+            </script>
+        
