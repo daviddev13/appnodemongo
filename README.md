@@ -23,7 +23,7 @@ Instalacion
 Para instalar la aplicacion se debe 
 
 1- Clonar archivos al pc
-git clone 
+git clone https://github.com/daviddev13/appnodemongo.git
 
 2- ir a la carpeta donde se clonaron los archivos
 cd nodejs-notes-app
