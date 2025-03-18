@@ -1,0 +1,53 @@
+{{!--Listado completo de usuarios--}}
+
+<h3> Lista de usuarios</h3> 
+   <a href="/" class="btn btn-danger">Retornar</a>
+   <table class="table table-responsive">
+      <thead>
+        <tr>
+            <th width="15%">Fecha_Creacion</th>
+            <th width="5%">id</th>
+            <th width="5%">Nombre</th>
+            <th vwidth="15%">email</th>
+            <th vwidth="5%">edad</th>
+            <th width="5%">calle</th>
+            <th width="5%">ciudad</th>
+            <th width="5%">pais</th>
+            <th width="5%">codigoPostal</th>
+            <th width="30%">       </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each usuarios}}
+            <tr>
+              <td>{{fecha_creacion}}</td>
+              <td>{{_id}}</td>
+              <td>{{nombre}}</td>
+              <td>{{email}}</td>
+              <td>{{edad}}</td>
+              <td>{{direcciones.[0].calle}}</td>
+              <td>{{direcciones.[0].ciudad}}</td>
+              <td>{{direcciones.[0].pais}}</td>
+              <td>{{direcciones.[0].codigo_postal}}</td>
+            <td><a href="/carrito/borrar/{{compra_id}}" class="btn btn-danger">Quitar Producto</a></td>
+        </tr>         
+        {{/each}}
+      </tbody>
+</table>
+
+<div class="pagination">
+    {{#if paginaAnterior}} <!-- Botón "Anterior" solo si hay páginas previas -->
+        <a href="?page={{paginaAnterior}}&limit={{limite}}" class="btn btn-primary">Anterior</a>
+    {{/if}}
+
+    {{#each paginas}} <!-- Renderizar enlaces para cada página -->
+        <a href="?page={{this.numero}}&limit={{../limite}}" 
+           class="btn {{#if this.activo}}btn-secondary{{else}}btn-light{{/if}}">
+           {{this.numero}}
+        </a>
+    {{/each}}
+
+    {{#if paginaSiguiente}} <!-- Botón "Siguiente" solo si hay más páginas -->
+        <a href="?page={{paginaSiguiente}}&limit={{limite}}" class="btn btn-primary">Siguiente</a>
+    {{/if}}
+</div>
