@@ -8,13 +8,12 @@
             <th width="15%">Fecha_Creacion</th>
             <th width="5%">id</th>
             <th width="5%">Nombre</th>
-            <th vwidth="15%">email</th>
+            <th vwidth="5%">email</th>
             <th vwidth="5%">edad</th>
             <th width="5%">calle</th>
             <th width="5%">ciudad</th>
             <th width="5%">pais</th>
             <th width="5%">codigoPostal</th>
-            <th width="30%">       </th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +28,6 @@
               <td>{{direcciones.[0].ciudad}}</td>
               <td>{{direcciones.[0].pais}}</td>
               <td>{{direcciones.[0].codigo_postal}}</td>
-            <td><a href="/carrito/borrar/{{compra_id}}" class="btn btn-danger">Quitar Producto</a></td>
         </tr>         
         {{/each}}
       </tbody>

@@ -126,15 +126,29 @@ router.put('/:id', async function (req, res) {
     const datosActualizados = req.body;
     console.log(`ID a actualizar: ${id}`);
     //console.log('Datos recibidos para actualizar:', datosActualizados);
+    //Convertir objeto a array y Eliminar el campo direccion
+    datosActualizados.direcciones = [datosActualizados.direccion]; 
+    delete datosActualizados.direccion;
     try {
-        const usuario = await Usuario.findByIdAndUpdate(id, datosActualizados, { new: true });
+        // Convertir direccion a direcciones, si es necesario
+        if (datosActualizados.direccion) {
+            datosActualizados.direcciones = [datosActualizados.direccion];
+            delete datosActualizados.direccion;
+        }
+        const usuario = await Usuario.findByIdAndUpdate(
+            id,
+            {
+                $set: datosActualizados
+            },
+            { new: true } // Para devolver el documento actualizado
+        );
         if (!usuario) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
         res.json({ message: 'Usuario actualizado correctamente', usuario });
     } catch (error) {
         console.error('Error al actualizar usuario:', error);
-        res.status(500).json({ error: 'Error al actualizar el usuario' });
+        res.status(500).json({ error: 'Error al actualizar usuario' });
     }
 });
 
